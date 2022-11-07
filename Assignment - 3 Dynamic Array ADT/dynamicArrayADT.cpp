@@ -1,5 +1,5 @@
-/* Assignment 1 Solutions
-   Array Data structure
+/* Assignment 3 Solutions
+   DynamicArray Data structure
    A
    Link:
 */

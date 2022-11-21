@@ -33,73 +33,60 @@ DoublyLinkedList::~DoublyLinkedList()
 
 void DoublyLinkedList::deleteNode(node *ptr)
 {
-    if (ptr == NULL)
-        cout << "\nInvalid Address..!!";
-    else if (ptr == start)
-        deleteAtStart();
-    else if (ptr->next == NULL)
+    if (ptr)
     {
-        ptr->prev->next = NULL;
-        delete ptr;
-    }
-    else
-    {
-        ptr->prev->next = ptr->next;
-        ptr->next->prev = ptr->prev;
-        delete ptr;
+        if (ptr->next && ptr->prev)
+        {
+            ptr->next->prev = ptr->prev;
+            ptr->prev->next = ptr->next;
+        }
+        else if (ptr->prev == NULL)
+            deleteAtStart();
+        else if (ptr->next == NULL)
+            deleteAtLast();
     }
 }
 
 void DoublyLinkedList::deleteAtLast()
 {
-    if (start == NULL)
-        cout << "\nList is emtpy..!!";
-    else if (start->next == NULL)
-    {
-        delete start;
-        start = NULL;
-    }
-    else
+    if (start)
     {
         node *t = start;
         while (t->next != NULL)
             t = t->next;
-        t->prev->next = NULL;
+        if (t->prev)
+            t->prev->next = NULL;
+        else
+            start = NULL;
         delete t;
     }
 }
 
 void DoublyLinkedList::deleteAtStart()
 {
-    if (start == NULL)
-        cout << "\nList is empty..!!";
-    else if (start->next == NULL)
-    {
-        delete start;
-        start = NULL;
-    }
-    else
+    if (start)
     {
         node *t = start;
         start = start->next;
-        start->prev = NULL;
         delete t;
+        if (start)
+            start->prev = NULL;
     }
 }
 
 DoublyLinkedList::node *DoublyLinkedList::searchNode(int data)
 {
     if (start == NULL)
-        cout << "\nList is empty..!!";
-    else
     {
-        node *t = start;
-        while (t != NULL)
-        {
-            if (t->item == data)
-                return t;
-            t = t->next;
-        }
+        cout << "\nList is empty..!!";
+        return NULL;
+    }
+    node *t = start;
+    while (t != NULL)
+    {
+        if (t->item == data)
+            return t;
+        t = t->next;
     }
     return NULL;
 }
@@ -122,22 +109,19 @@ void DoublyLinkedList::printList()
 
 void DoublyLinkedList::insertNode(node *ptr, int data)
 {
-    if (ptr == NULL)
+    if (ptr)
     {
-        cout << "\nInvalid Address..!!";
-        return;
-    }
-    node *n = new node;
-    n->item = data;
-    n->prev = ptr;
-    if (ptr->next == NULL) // for single node
+        node *n = new node;
+        n->item = data;
         n->next = NULL;
-    else
-    {
-        ptr->next->prev = n;
-        n->next = ptr->next;
+        n->prev = ptr;
+        if (ptr->next)
+        {
+            ptr->next->prev = n;
+            n->next = ptr->next;
+        }
+        ptr->next = n;
     }
-    ptr->next = n;
 }
 
 void DoublyLinkedList::insertAtLast(int data)
@@ -145,21 +129,15 @@ void DoublyLinkedList::insertAtLast(int data)
     node *n = new node;
     n->item = data;
     n->next = NULL;
-
-    if (start == NULL)
-    {
-        start = n;
-        n->prev = NULL;
-    }
-    else
+    n->prev = NULL; // update if start have point atleast one node
+    if (start)
     {
         node *t = start;
         while (t->next != NULL)
             t = t->next;
-        n->prev = t;
         t->next = n;
+        n->prev = t;
     }
-    cout << "inserted..";
 }
 
 void DoublyLinkedList::insertAtStart(int data)
@@ -168,13 +146,9 @@ void DoublyLinkedList::insertAtStart(int data)
     n->item = data;
     n->prev = NULL;
     n->next = start;
-    if (start == NULL)
-        start = n;
-    else
-    {
+    if (start)
         start->prev = n;
-        start = n;
-    }
+    start = n;
 }
 
 DoublyLinkedList::DoublyLinkedList() { start = NULL; }

@@ -14,6 +14,7 @@ private:
 
 public:
     ArrayADT(int);
+    ArrayADT(ArrayADT &);
     bool isEmpty();
     void appendElement(int);
     void insertElement(int, int);
@@ -24,8 +25,35 @@ public:
     int countElement();
     int searchElement(int);
     void viewElements();
+    int getCapacity();
+    void operator=(ArrayADT &);
     ~ArrayADT();
 };
+
+void ArrayADT::operator=(ArrayADT &arr)
+{
+    capacity = arr.capacity;
+    lastIndex = arr.lastIndex;
+    if (ptr != NULL)
+        delete[] ptr; // stack is already have Array
+    ptr = new int[capacity];
+    for (int i = 0; i <= lastIndex; i++)
+        ptr[i] = arr.ptr[i];
+}
+
+int ArrayADT::getCapacity()
+{
+    return capacity;
+}
+
+ArrayADT::ArrayADT(ArrayADT &arr)
+{
+    capacity = arr.capacity;
+    lastIndex = arr.lastIndex;
+    ptr = new int[capacity];
+    for (int i = 0; i <= lastIndex; i++)
+        ptr[i] = arr.ptr[i];
+}
 
 /* create dynamically array, providing capacity */
 ArrayADT::ArrayADT(int capacity)
@@ -45,7 +73,7 @@ bool ArrayADT::isEmpty()
 void ArrayADT::appendElement(int element)
 {
     if (lastIndex == capacity - 1) // Check array is Full
-        cout << "\nArray is already Full...!!";
+        cout << "\nOverFlow..!!, " << element << " is not pushed or inserted..";
     else
         ptr[++lastIndex] = element; // append element
 }
@@ -100,11 +128,12 @@ bool ArrayADT::isFull()
 int ArrayADT::getElement(int index)
 {
     if (isEmpty())
-        cout << "\nArray is empty..";
+        cout << "\nYes,It is empty..";
     else if (index < 0 || index > lastIndex)
         cout << "\nInvalid Index...";
     else
         return ptr[index]; // return value
+    return -1;
 }
 
 /* count no. of element in array */
@@ -125,9 +154,14 @@ int ArrayADT::searchElement(int element)
 /* view all element */
 void ArrayADT::viewElements()
 {
-    cout << endl;
-    for (int i = 0; i <= lastIndex; i++)
-        cout << ptr[i] << " ";
+    if (lastIndex == -1)
+        cout << "\nData is Empty..!!";
+    else
+    {
+        cout << endl;
+        for (int i = 0; i <= lastIndex; i++)
+            cout << ptr[i] << " ";
+    }
 }
 
 /* DeAllocate dynamically create memory */
@@ -135,4 +169,3 @@ ArrayADT::~ArrayADT()
 {
     delete[] ptr; // delete dynamically memory
 }
-

@@ -15,8 +15,8 @@ public:
     Queue(int);
     Queue(Queue &);
     void insertRear(int);
-    int viewRear();
-    int viewFront();
+    int getRear();
+    int getFront();
     void deleteFront();
     bool isEmpty();
     bool isFull();
@@ -24,7 +24,7 @@ public:
     int count();
     Queue &operator=(Queue &);
 };
-Queue &operator=(Queue &Q)
+Queue &Queue::operator=(Queue &Q)
 {
     capacity = Q.capacity;
     front = Q.front;
@@ -74,11 +74,11 @@ Queue::~Queue()
 {
     delete[] ptr;
 }
-void Queue::isFull()
+bool Queue::isFull()
 {
-    return (front = 0 && rear = capacity - 1) || (rear + 1 == front);
+    return (front == 0 && rear == capacity - 1) || (rear + 1 == front);
 }
-void Queue::isEmpty()
+bool Queue::isEmpty()
 {
     return rear == -1; // not need to check both of the condition
 }
@@ -151,5 +151,5 @@ int main()
     obj.insertRear(45);
     obj.deleteFront();
     obj.deleteFront();
-    cout << "Front = " << obj.viewFront() << " Rear = " << obj.viewRear() << endl;
+    cout << "Front = " << obj.getFront() << " Rear = " << obj.getRear() << endl;
 }

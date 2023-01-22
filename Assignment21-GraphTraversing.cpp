@@ -47,6 +47,7 @@ void GraphMatrix::dfs()
     while (!stack.isEmpty())
     {
         n = stack.peek();
+        cout << " v" << n;
         stack.pop();
 
         vector<int> d_array; // store neighbours of n
@@ -59,7 +60,6 @@ void GraphMatrix::dfs()
         {
             if (visit[d_array.at(j)] == false)
             {
-                cout << d_array.at(j) << " ";
                 stack.push(d_array.at(j));
                 visit[d_array.at(j)] = true;
             }
@@ -85,6 +85,7 @@ void GraphMatrix::bfs()
     while (!queue.isEmpty())
     {
         n = queue.getFront();
+        cout << " v" << n;
         queue.deleteFront();
 
         vector<int> d_array; // store neighbours of n
@@ -97,7 +98,6 @@ void GraphMatrix::bfs()
         {
             if (visit[d_array.at(j)] == false)
             {
-                cout << d_array.at(j) << " ";
                 queue.insertRear(d_array.at(j));
                 visit[d_array.at(j)] = true;
             }
@@ -287,11 +287,12 @@ void GraphList::dfs()
     visit[sourceNode] = true;
     int n;
 
-    cout << "Graph Matrix vertex(dfs): ";
+    cout << "\nGraph Matrix vertex(dfs): ";
 
     while (!stack.isEmpty())
     {
         n = stack.peek();
+        cout << " v" << n;
         stack.pop();
 
         vector<int> d_array; // store neighbours of n
@@ -302,7 +303,6 @@ void GraphList::dfs()
         {
             if (visit[d_array.at(j)] == false)
             {
-                cout << d_array.at(j) << " ";
                 stack.push(d_array.at(j));
                 visit[d_array.at(j)] = true;
             }
@@ -323,11 +323,12 @@ void GraphList::bfs()
     visit[sourceNode] = true;
     int n;
 
-    cout << "Graph Matrix vertex(bfs): ";
+    cout << "\nGraph Matrix vertex(bfs): ";
 
     while (!queue.isEmpty())
     {
         n = queue.getFront();
+        cout << " v" << n;
         queue.deleteFront();
 
         vector<int> d_array; // store neighbours of n
@@ -338,7 +339,6 @@ void GraphList::bfs()
         {
             if (visit[d_array.at(j)] == false)
             {
-                cout << d_array.at(j) << " ";
                 queue.insertRear(d_array.at(j));
                 visit[d_array.at(j)] = true;
             }
@@ -384,12 +384,4 @@ GraphList ::GraphList()
 {
     v_count = 0;
     arr = NULL;
-}
-int main()
-{
-    GraphList G;
-    G.createGraph(6);
-    G.printGraph();
-    G.bfs();
-    return 0;
 }
